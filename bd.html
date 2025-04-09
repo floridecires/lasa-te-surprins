@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Birthday Gate</title>
+  <style>
+    /* ... your CSS styles ... */
+    body {
+      font-family: sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f4f4f4;
+    }
+
+    .container {
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    input[type="text"] {
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      width: 200px;
+      box-sizing: border-box;
+      font-family: 'Brush Script MT', cursive;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-family: 'Brush Script MT', cursive;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    #message {
+      margin-top: 15px;
+      font-weight: bold;
+      font-family: 'Brush Script MT', cursive;
+    }
+
+    h1, p {
+      font-family: 'Brush Script MT', cursive;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Bine ai venit!!</h1>
+    <p>Pentru a continua, te rog să îţi introduci data de naştere în acest format (DD/MM/YYYY):</p>
+    <input type="text" id="passwordInput" placeholder="DD/MM/YYYY" oninput="formatBirthday(this)">
+    <button onclick="checkPassword()">Enter</button>
+    <div id="message"></div>
+    <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExZHA4eGIyZHNobHRtbmE2a3RiMHZyNzdsODF6Z2N0cXVvMzN1YXYxMCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/xdH0MjQ83lGFVv7gjR/giphy.gif" alt="GIF Aniversar">
+  </div>
+
+  <script>
+    function formatBirthday(input) {
+      let value = input.value.replace(/[^\d\/]/g, ''); // Only allow digits and slashes
+
+      if (value.length === 2 && !value.includes('/')) {
+        value += '/';
+      } else if (value.length === 5 && value.split('/').length === 2 && !value.endsWith('/')) {
+        value += '/';
+      }
+
+      // Enforce length limits
+      let parts = value.split('/');
+      if (parts[0] && parts[0].length > 2) {
+        parts[0] = parts[0].slice(0, 2);
+      }
+      if (parts[1] && parts[1].length > 2) {
+        parts[1] = parts[1].slice(0, 2);
+      }
+      if (parts[2] && parts[2].length > 4) {
+        parts[2] = parts[2].slice(0, 4);
+      }
+
+      input.value = parts.join('/');
+
+      // Prevent further typing if the format is complete
+      if (input.value.length === 10) {
+        input.setAttribute('readonly', true);
+        setTimeout(() => {
+          input.removeAttribute('readonly');
+        }, 10); // Small delay to allow the last character to be entered
+      }
+    }
+
+    function checkPassword() {
+      const passwordInput = document.getElementById("passwordInput");
+      const messageDiv = document.getElementById("message");
+      const correctPassword = "11/10/2008"; // Example birthday - you can change this!
+      const nextPageURL = "bd2.html"; // The URL of the page to open
+
+      if (passwordInput.value === correctPassword) {
+        messageDiv.textContent = "Access granted! Opening the next page...";
+        window.location.href = nextPageURL;
+      } else {
+        messageDiv.textContent = "Ups, nu te pot lăsa să continui.";
+      }
+    } 
+  </script>
+
+</body>
+</html>
